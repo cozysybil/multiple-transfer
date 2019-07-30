@@ -31,4 +31,6 @@ replace all "modified" file and add new "multiple_transfer_commands.rs" to the d
 ```
 cargo run -p libra_swarm -- -s
 ```
-
+don't forget to edit the "/libra/terraform/validator-sets/dev/node.config.toml" at  
+**[vm_config][vm_config.publishing_options] type = "Lock"**  to  
+**[vm_config][vm_config.publishing_options] type = "Open"**
