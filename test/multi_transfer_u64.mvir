@@ -1,0 +1,36 @@
+import 0x0.LibraAccount;
+// import 0x0.LibraCoin;
+main(amount: u64, payee1: address, payee2: address, payee3: address) {
+  let coin: u64;
+  let total: u64;
+  let fraction: u64;
+  let account1_exists: bool;
+  let account2_exists: bool;
+  let account3_exists: bool;
+
+  // create account if account is not exist
+  account1_exists = LibraAccount.exists(copy(payee1));
+  if (!move(account1_exists)) {
+    create_account(copy(payee1));
+  }
+  account2_exists = LibraAccount.exists(copy(payee2));
+  if (!move(account2_exists)) {
+    create_account(copy(payee2));
+  }
+  account3_exists = LibraAccount.exists(copy(payee3));
+  if (!move(account3_exists)) {
+    create_account(copy(payee3));
+  }
+
+  // split amount to 3 divided
+  fraction = copy(amount) % 3;
+  total = copy(amount) - copy(fraction);
+  coin = copy(total) / 3;
+
+  // can use 'copy' because 'coin' is just a u64
+  LibraAccount.pay_from_sender(move(payee1), copy(coin));
+  LibraAccount.pay_from_sender(move(payee2), copy(coin));
+  LibraAccount.pay_from_sender(move(payee3), copy(coin));
+
+  return;
+}

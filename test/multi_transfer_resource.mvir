@@ -1,0 +1,48 @@
+import 0x0.LibraAccount;
+import 0x0.LibraCoin;
+main(amount: u64, payee1: address, payee2: address, payee3: address) {
+  let coin1: R#LibraCoin.T; 
+  let coin2: R#LibraCoin.T;
+  let coin3: R#LibraCoin.T;
+  let coin_back: R#LibraCoin.T;
+
+  let total: u64;
+  let fraction: u64;
+  let devided1: u64;
+  let devided2: u64;
+
+  let account1_exists: bool;
+  let account2_exists: bool;
+  let account3_exists: bool;
+  
+  // create account if account is not exist
+  account1_exists = LibraAccount.exists(copy(payee1));
+  if (!move(account1_exists)) {
+    create_account(copy(payee1));
+  }
+  account2_exists = LibraAccount.exists(copy(payee2));
+  if (!move(account2_exists)) {
+    create_account(copy(payee2));
+  }
+  account3_exists = LibraAccount.exists(copy(payee3));
+  if (!move(account3_exists)) {
+    create_account(copy(payee3));
+  }
+
+  // split amount to 3 divided
+  fraction = copy(amount) % 3;
+  total = move(amount) - move(fraction);
+  devided1 = copy(total) / 3;
+  devided2 = copy(devided1);
+
+  // can only use 'move' because 'coinX' is a '0x0.LibraCoin'
+  coin1 = LibraAccount.withdraw_from_sender(move(total)); // coin1=amount
+  coin2 = LibraCoin.withdraw(&mut coin1, move(devided1)); // coin1=amount-devided1, coin2 value=devided1
+  coin3 = LibraCoin.withdraw(&mut coin1, move(devided2)); // coin1=amount-devided1-devided2, coin2=devided1, coin3=devided2
+  
+
+  LibraAccount.deposit(move(payee1), move(coin1));
+  LibraAccount.deposit(move(payee2), move(coin2));
+  LibraAccount.deposit(move(payee3), move(coin3));
+  return;
+}
