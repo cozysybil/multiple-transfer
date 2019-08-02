@@ -2,7 +2,7 @@
 ## How to use the .mvir
 multiple-transfer use for send coin from one to 3 account equally.  
 
-when you have **transaction_script(.mvir)**, you can use **compiler** to compile it to the **.program** file. then use **transaction_builder** with **arguments** for build it to **.txn**, and use CLI for submit the .txn with "sender" of transaction.
+when you have **transaction_script(.mvir)**, you can use **compiler** to compile it to the **.program**(bytecode) file. then use **transaction_builder** with **arguments** for build it to **.txn**(binary), and use CLI for submit the .txn with "sender" of transaction.
   
 **.mvir** --> |compiler| --> **.program** --> |transaction_builder|+<args>  --> **.txn**  
   
