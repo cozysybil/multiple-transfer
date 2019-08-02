@@ -16,6 +16,14 @@ cargo run -p libra_swarm -- -s
 3. use **account0** transfer 1 libra to **account1** (up to you!!) (because **seq.no of sender must more than 0**)
 
 ### terminal 2
+after build the compiler and the transaction builder...
+```
+$cargo build --bin compiler
+$cd language/transaction_builder/
+$cargo build --features=’build-binary’
+```
+see more:https://medium.com/featly/how-to-compile-and-deploy-move-transaction-script-on-libra-local-network-4b03e0ff5cbd  
+  
 cd to **libra/** then run below cmd for create .program from mvir,...
 ```
 compiler -o <output_program> <transaction_script>
@@ -24,6 +32,7 @@ for example...
 ```
 ./target/debug/compiler -o ./test/multi_transfer_v1.program ./test/multi_transfer_u64.mvir
 ```  
+
 I use compiler in "libra/target/debug/" for compiling "libra/test/**multi_transfer_u64.mvir**" to "libra/test/**multi_transfer_v1.program**"
 then use **address of account0, account1, account2, account3** and **seq.no of account0** for 'args' when build the transaction...
 ```
